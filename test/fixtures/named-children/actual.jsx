@@ -1,5 +1,5 @@
 <Dialog>
-    <Dialog:header as={ title }><h1>Header { title }</h1></Dialog:header>
+    <Dialog:header as={ title } name="Header"><h1>Header { title }</h1></Dialog:header>
     <div>Contents 1</div>
     <Dialog:footer><div>Footer A</div></Dialog:footer>
     <Dialog:footer><div>Footer B</div></Dialog:footer>

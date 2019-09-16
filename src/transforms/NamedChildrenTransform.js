@@ -23,7 +23,8 @@ module.exports = class NamedChildrenTransform {
             return false;
         }
 
-        let attrName = nameRoot.namespace.name.toLowerCase() + '_' + nameRoot.name.name;
+        const nameAttr = PathUtils.getAttributeValue(path, 'name');
+        let attrName = !nameAttr ? nameRoot.name.name : nameAttr.value;
         let parentAttrs = path.parent.openingElement.attributes;
 
         // Check to see if we need to convert to a function
