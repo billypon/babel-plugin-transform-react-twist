@@ -1,4 +1,4 @@
-var _C = _interopRequireDefault(require('@twist/babel-plugin-transform-react/src/runtime/classes')).default;
+var _C = _interopRequireDefault(require('babel-plugin-transform-react-twist/src/runtime/classes')).default;
 
 function _interopRequireDefault(obj) {
     return (obj && obj.__esModule ? obj : {
