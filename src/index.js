@@ -36,7 +36,7 @@ const OPTIONS = {
     arrowLifting: true,
     controlledInput: true,
     autoImport: {},
-    moduleName: '@twist/babel-plugin-transform-react',
+    moduleName: 'babel-plugin-transform-react-twist',
 };
 
 module.exports = () => ({
