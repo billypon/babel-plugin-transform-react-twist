@@ -1,7 +1,5 @@
 # babel-plugin-transform-react-twist
 
-[![Build Status](https://travis-ci.org/adobe/babel-plugin-transform-react-twist.svg?branch=master)](https://travis-ci.org/adobe/babel-plugin-transform-react-twist)
-
 This babel plugin enhances React-compatible JSX with additional features, including structural components, style and class attribute shorthands, and shorthand for two-way data binding. This is intended to be used as part of [React-Twist](https://github.com/adobe/react-twist), but it can also be used as a standalone Babel plugin with React.
 
 It also implements various optimizations on top of React, such as automatically hoisting arrow functions from the render function, if safe to do so.
@@ -233,3 +231,12 @@ render() {
 ```
 
 But it's easy to forget to do this. React-Twist makes life easier by doing this hoisting for you - so long as it's safe to do so (e.g. if the arrow function references other variables that were defined inside of `render()`, then there's no way around recreating it each time, since these variables could change).
+
+## FAQ
+
+### What is the difference with `@twist/babel-plugin-transform-react`?
+
+- it is maintained, `@twist`'s seems dead
+- it fixed namespace of NamedChildren
+- it can change attribute name of NamedChildren
+- it supports switch-case flow control
