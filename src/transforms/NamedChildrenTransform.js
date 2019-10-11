@@ -14,17 +14,31 @@
 const t = require('babel-types');
 const PathUtils = require('@twist/babel-plugin-transform/src/PathUtils');
 
+function getName(name) {
+  return `${name.object.name ? name.object.name : getName(name.object)}.${name.property.name}`;
+}
+
 module.exports = class NamedChildrenTransform {
     static apply(path) {
         t.assertJSXElement(path.node);
         const nameRoot = path.node.openingElement.name;
-        if (!nameRoot.namespace || !t.isJSXElement(path.parent) || path.parent.openingElement.name.name !== nameRoot.namespace.name) {
-            // Only hoist namespaced elements, and only if the parent is a JSX element, and only if namespace is the same as parent tag name
+        let attrName;
+        if (nameRoot.namespace) {
+            if (t.isJSXElement(path.parent) && path.parent.openingElement.name.name === nameRoot.namespace.name) {
+                attrName = nameRoot.name.name;
+            }
+        } else if (nameRoot.object) {
+            const [ , attr ] = nameRoot.property.name.split('_');
+            if (attr && t.isJSXElement(path.parent) && path.parent.openingElement.name.object && getName(nameRoot).startsWith(getName(path.parent.openingElement.name) + '_')) {
+                attrName = attr;
+            }
+        }
+        if (!attrName) {
             return false;
         }
 
         const nameAttr = PathUtils.getAttributeValue(path, 'name');
-        let attrName = !nameAttr ? nameRoot.name.name : nameAttr.value;
+        attrName = !nameAttr ? attrName : nameAttr.value;
         let parentAttrs = path.parent.openingElement.attributes;
 
         // Check to see if we need to convert to a function
