@@ -16,6 +16,9 @@ const PathUtils = require('@twist/babel-plugin-transform/src/PathUtils');
 
 module.exports = class AsAttributeTransform {
     static apply(path) {
+        if (path.node.openingElement.name.name === 'Link') {
+            return;
+        }
         const args = PathUtils.stripAsIdentifiers(path);
         if (!args || !path.node.children) {
             return;
