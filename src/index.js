@@ -23,6 +23,7 @@ const ComponentImportTransform = require('@twist/babel-plugin-transform/src/tran
 const DecoratorImportTransform = require('@twist/babel-plugin-transform/src/transforms/DecoratorImportTransform');
 const ArrowLiftingTransform = require('./transforms/ArrowLiftingTransform');
 const ControlledInputTransform = require('./transforms/ControlledInputTransform');
+const FragmentTransform = require('./transforms/FragmentTransform');
 
 const OPTIONS = {
     refAttribute: true,
@@ -35,6 +36,7 @@ const OPTIONS = {
     bindAttribute: true,
     arrowLifting: true,
     controlledInput: true,
+    fragment: true,
     autoImport: {},
     moduleName: 'babel-plugin-transform-react-twist',
 };
@@ -115,6 +117,10 @@ const programVisitor = (path, state, options) => ({
         // differently.
         if (!transformedControlFlow && options.asAttribute) {
             AsAttributeTransform.apply(path, state);
+        }
+
+        if (options.fragment) {
+            FragmentTransform.apply(path, state);
         }
     }
 });

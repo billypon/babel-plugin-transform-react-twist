@@ -25,6 +25,7 @@ The plugin options are as follows. If you're using this as part of React-Twist, 
     asAttribute: true,       // Support the "as" attribute as a means of providing parameters via JSX (e.g. <route:provider as={route}>...)
     bindAttribute: true,     // Support bind:value={ this.value } as a shorthand for adding an event listener to update this.value.
     arrowLifting: true,      // Automatically lift arrow functions in JSX, so they don't get recreated every time the component is rendered.
+    fragment: true,          // Transform children to array.
 }
 ```
 
@@ -204,6 +205,29 @@ pure React code:
 
 While these children are exposed as React props, we also expose a more convenient `renderChildren()` API that also supports
 passing arguments to named children. See the react-twist docs for more information.
+
+### Fragment
+
+Some component can't be wrapped by Fragment,
+fragment tag can transform children components to array.
+
+```jsx
+<fragment>
+    <div>foo</div>
+    <div key="bar">bar</div>
+    <div key={ baz }>baz</div>
+    { callFn() }
+</fragment>
+```
+
+```jsx
+[
+    <div key='0'>foo</div>,
+    <div key="bar">bar</div>,
+    <div key={ baz }>baz</div>,
+    callFn()
+]
+```
 
 ### Performance Optimizations
 
