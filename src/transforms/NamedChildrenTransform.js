@@ -28,6 +28,7 @@ module.exports = class NamedChildrenTransform {
         let parentAttrs = path.parent.openingElement.attributes;
 
         // Check to see if we need to convert to a function
+        path.node.children = traverse(path.node.children, path);
         let attrValue = PathUtils.jsxChildrenToJS(path.node.children);
         const args = PathUtils.stripAsIdentifiers(path);
         if (args && attrValue) {
@@ -50,3 +51,17 @@ module.exports = class NamedChildrenTransform {
         return true;
     }
 };
+
+function traverse(children, parentPath) {
+    if (children.length) {
+        children = children.filter(node => {
+            if (t.isJSXElement(node)) {
+                const path = { type: node.type, node, parent: parentPath.node, parentPath, remove: () => 0 };
+                node.children = traverse(node.children, path);
+                node = module.exports.apply(path) ? null : node;
+            }
+            return node;
+        });
+    }
+    return children
+}
