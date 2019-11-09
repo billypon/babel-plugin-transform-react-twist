@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-transform-react-twist",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "author": "billypon",
   "description": "Transformations for Twist enhancements to React",
   "repository": "https://github.com/billypon/babel-plugin-transform-react-twist",
