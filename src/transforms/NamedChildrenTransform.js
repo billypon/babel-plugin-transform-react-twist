@@ -55,10 +55,23 @@ module.exports = class NamedChildrenTransform {
 function traverse(children, parentPath) {
     if (children.length) {
         children = children.filter(node => {
-            if (t.isJSXElement(node)) {
-                const path = { type: node.type, node, parent: parentPath.node, parentPath, remove: () => 0 };
-                node.children = traverse(node.children, path);
-                node = module.exports.apply(path) ? null : node;
+            const path = { type: node.type, node, parent: parentPath.node, parentPath, remove: () => 0 };
+            switch (node.type) {
+                case 'JSXElement':
+                    node.children = traverse(node.children, path);
+                    node = module.exports.apply(path) ? null : node;
+                    break;
+                case 'JSXExpressionContainer':
+                    const { expression } = node;
+                    switch (expression.type) {
+                        case 'LogicalExpression':
+                            const expressionNode = expression.right;
+                            if (expressionNode.type === 'JSXElement') {
+                                traverse([ expressionNode ], path);
+                            }
+                            break;
+                    }
+                    break;
             }
             return node;
         });
