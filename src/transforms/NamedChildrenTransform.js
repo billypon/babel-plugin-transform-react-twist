@@ -70,6 +70,16 @@ function traverse(children, parentPath) {
                                 traverse([ expressionNode ], path);
                             }
                             break;
+                        case 'ConditionalExpression':
+                            const consequentNode = expression.consequent;
+                            const alternateNode = expression.alternate;
+                            if (consequentNode.type === 'JSXElement') {
+                                traverse([ consequentNode ], path);
+                            }
+                            if (alternateNode.type === 'JSXElement') {
+                                traverse([ alternateNode ], path);
+                            }
+                            break;
                     }
                     break;
             }
