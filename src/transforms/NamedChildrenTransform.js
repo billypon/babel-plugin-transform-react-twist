@@ -80,6 +80,12 @@ function traverse(children, parentPath) {
                                 traverse([ alternateNode ], path);
                             }
                             break;
+                        case 'CallExpression':
+                            const expressionBody = expression.arguments[0].body;
+                            if (expressionBody.type === 'JSXElement') {
+                                traverse([ expressionBody ], path);
+                            }
+                            break;
                     }
                     break;
             }
