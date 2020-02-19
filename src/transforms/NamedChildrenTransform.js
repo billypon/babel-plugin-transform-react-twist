@@ -81,8 +81,8 @@ function traverse(children, parentPath) {
                             }
                             break;
                         case 'CallExpression':
-                            const expressionBody = expression.arguments[0].body;
-                            if (expressionBody.type === 'JSXElement') {
+                            const expressionBody = expression.arguments[0] && expression.arguments[0].body;
+                            if (expressionBody && expressionBody.type === 'JSXElement') {
                                 traverse([ expressionBody ], path);
                             }
                             break;
